@@ -43,6 +43,11 @@ jobs:
         run: |
           echo "Release: ${{ matrix.release }}" &&
           echo "Clean Release ${{ env.CLEAN_RELEASE }}"
+      - name: Kill old bootstrap node
+        run: |
+          gcloud compute instances delete hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01 \
+            --zone=europe-west6-a \
+            --no-user-output-enabled || true
       - name: Create new bootstrap node with a given IP for a specific release
         run: |
           gcloud compute instances create-with-container hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01 \
