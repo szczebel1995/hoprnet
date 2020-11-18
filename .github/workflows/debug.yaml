@@ -22,9 +22,10 @@ jobs:
           - environment: release
             release: 1.55.0
             ip_address: 34.65.5.42
-          - environment: master
-            release: 1.55.0-next.18
-            ip_address: 34.65.102.152
+          # Skipping master to avoid dropping master bs node
+          # - environment: master
+          #   release: 1.55.0-next.18
+          #   ip_address: 34.65.102.152
     steps:
       - uses: actions/checkout@v2
       - name: Setup Google Cloud Credentials
