@@ -14,7 +14,7 @@ jobs:
         shell: bash
     strategy:
       matrix:
-        environment: ['master', 'release']
+        environment: ['release'] # Skipping master to avoid dropping master bs node
         include:
         # @HACK: Using a hardcoded release to make things a bit easier for debugging.
         # @TODO: Remove release hardcoded value
@@ -42,21 +42,21 @@ jobs:
         run: |
           echo "Release: ${{ matrix.release }}" &&
           echo "Clean Release ${{ env.CLEAN_RELEASE }}"
-      # - name: Spawn new BS node
-      #   run: |
-      #     gcloud compute instances create-with-container hopr-${{ matrix.release }} \
-      #       --zone=europe-west6-a \
-      #       --machine-type=e2-medium \
-      #       --network-interface=address=34.65.102.152,network-tier=PREMIUM,subnet=default  \
-      #       --metadata=google-logging-enabled=true --maintenance-policy=MIGRATE \
-      #       --disk name=cd-bootstrap-develop-01 \
-      #       --container-mount-disk mount-path="/app/db" \
-      #       --tags=hopr-node,boosttrap,develop \
-      #       --boot-disk-size=10GB --boot-disk-type=pd-standard \
-      #       --container-env=^,@^DEBUG=hopr\*,@NODE_OPTIONS=--max-old-space-size=4096 \
-      #       --container-image=gcr.io/hoprassociation/hoprd:${{ env.RELEASE }} \
-      #       --container-arg="--password" --container-arg="${{ secrets.BS_PASSWORD }}" \
-      #       --container-arg="--env" --container-arg="matic" \
-      #       --container-arg="--bootstrap" --container-arg="true" \
-      #       --container-arg="--admin" \
-      #       --container-restart-policy=always
+      - name: Create new bootstrap node with a given IP for a specific release
+        run: |
+          gcloud compute instances create-with-container hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01 \
+            --zone=europe-west6-a \
+            --machine-type=e2-medium \
+            --network-interface=address=${{ matrix.ip_address }},network-tier=PREMIUM,subnet=default  \
+            --metadata=google-logging-enabled=true --maintenance-policy=MIGRATE \
+            --create-disk name=hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01,size=10GB,type=pd-ssd,mode=rw \
+            --container-mount-disk mount-path="/app/db" \
+            --tags=hopr-node,bootstrap,develop \
+            --boot-disk-size=10GB --boot-disk-type=pd-standard \
+            --container-env=^,@^DEBUG=hopr\*,@NODE_OPTIONS=--max-old-space-size=4096 \
+            --container-image=gcr.io/hoprassociation/hoprd:${{ env.RELEASE }} \
+            --container-arg="--password" --container-arg="${{ secrets.BS_PASSWORD }}" \
+            --container-arg="--env" --container-arg="matic" \
+            --container-arg="--bootstrap" --container-arg="true" \
+            --container-arg="--admin" \
+            --container-restart-policy=always
