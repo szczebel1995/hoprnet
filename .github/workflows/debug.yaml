@@ -40,8 +40,8 @@ jobs:
         run: echo "CLEAN_RELEASE=$(echo "${{ matrix.release}}" | sed 's/\./-/g')" >> $GITHUB_ENV
       - name: Verify matrix and environment variables
         run: |
-          echo "Release: ${{ matrix.release }}" && \
-          echo "Clean Release ${{ env.CLEAN_RELEASE }}" && \
+          echo "Release: ${{ matrix.release }}" &&
+          echo "Clean Release ${{ env.CLEAN_RELEASE }}"
       # - name: Spawn new BS node
       #   run: |
       #     gcloud compute instances create-with-container hopr-${{ matrix.release }} \
