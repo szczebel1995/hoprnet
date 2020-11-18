@@ -1,0 +1,62 @@
+name: 'Debug'
+
+on:
+  push:
+    branches:
+      - debug/**
+
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        environment: ['master', 'release']
+        include:
+        # @HACK: Using a hardcoded release to make things a bit easier for debugging.
+        # @TODO: Remove release hardcoded value
+        # NB: Ips are currently created on our console panel, please check w/IT for any issues.
+          - environment: release
+            release: 1.55.0
+            ip_address: 34.65.5.42
+          - environment: master
+            release: 1.55.0-next.18
+            ip_address: 34.65.102.152
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Google Cloud Credentials
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.GOOGLE_HOPRASSOCIATION_CREDENTIALS_REGISTRY }}
+          export_default_credentials: true
+      - name: Set Project for Google Cloud HOPR Association
+        working-directory: packages/hoprd
+        run: gcloud config set project ${{ secrets.GOOGLE_HOPRASSOCIATION_PROJECT }}
+      - name: Get release from hardcoded matrix value
+        run: echo "CLEAN_RELEASE=$(echo "${{ matrix.release}}" | sed 's/\./-/g')" >> $GITHUB_ENV
+      - name: Verify matrix and environment variables
+        run: |
+          echo "Release: ${{ matrix.release }}" && \
+          echo "Clean Release ${{ env.CLEAN_RELEASE }}" && \
+      # - name: Spawn new BS node
+      #   run: |
+      #     gcloud compute instances create-with-container hopr-${{ matrix.release }} \
+      #       --zone=europe-west6-a \
+      #       --machine-type=e2-medium \
+      #       --network-interface=address=34.65.102.152,network-tier=PREMIUM,subnet=default  \
+      #       --metadata=google-logging-enabled=true --maintenance-policy=MIGRATE \
+      #       --disk name=cd-bootstrap-develop-01 \
+      #       --container-mount-disk mount-path="/app/db" \
+      #       --tags=hopr-node,boosttrap,develop \
+      #       --boot-disk-size=10GB --boot-disk-type=pd-standard \
+      #       --container-env=^,@^DEBUG=hopr\*,@NODE_OPTIONS=--max-old-space-size=4096 \
+      #       --container-image=gcr.io/hoprassociation/hoprd:${{ env.RELEASE }} \
+      #       --container-arg="--password" --container-arg="${{ secrets.BS_PASSWORD }}" \
+      #       --container-arg="--env" --container-arg="matic" \
+      #       --container-arg="--bootstrap" --container-arg="true" \
+      #       --container-arg="--admin" \
+      #       --container-restart-policy=always
