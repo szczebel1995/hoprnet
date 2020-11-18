@@ -48,6 +48,7 @@ jobs:
           gcloud compute instances create-with-container hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01 \
             --zone=europe-west6-a \
             --machine-type=e2-medium \
+            --network-interface=address=${{ matrix.ip_address }},network-tier=PREMIUM,subnet=default \
             --metadata=google-logging-enabled=true --maintenance-policy=MIGRATE \
             --tags=hopr-node,bootstrap,develop \
             --boot-disk-size=10GB --boot-disk-type=pd-standard \
