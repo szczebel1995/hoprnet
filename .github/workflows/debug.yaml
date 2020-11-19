@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "Release: ${{ matrix.release }}" &&
           echo "Clean Release ${{ env.CLEAN_RELEASE }}"
-      - name: "Detect whether we have created already the server"
+      - name: Detect whether we have created already the server
         run: |
           if [[ $(gcloud compute instances list | grep hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01) ]]; then
             echo "GCLOUD_UPDATE_CONTAINER=true" >> $GITHUB_ENV
@@ -52,6 +52,7 @@ jobs:
           fi
       - name: Update bootstrap node with a new container image
         if: env.GCLOUD_UPDATE_CONTAINER
+        run: |
           gcloud compute instances update-container hopr-bootstrap-${{ env.CLEAN_RELEASE }}-01 \
             --container-image=gcr.io/hoprassociation/hoprd:${{ matrix.release }}\
             --container-mount-disk name=bs-${{ env.CLEAN_RELEASE }}-01,mount-path="/app/db"
