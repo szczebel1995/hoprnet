@@ -8,16 +8,17 @@ import {
   Ticket,
   TicketEpoch,
   Moment,
-  ChannelEntry
+  ChannelEntry,
+  SignedTicket
 } from '../types'
-import { getId, pubKeyToAccountId, isPartyA, Log, hash } from '../utils'
+import { getId, pubKeyToAccountId, isPartyA, Log, hash, computeWinningProbability } from '../utils'
 import type { Channel as IChannel } from '@hoprnet/hopr-core-connector-interface'
 import { toU8a } from '@hoprnet/hopr-utils'
 import { getChannel as getOnChainState, initiateChannelSettlement, getTicketEpoch } from '../chainInteractions'
 
 const log = Log(['channel-factory'])
 
-const DEFAULT_WIN_PROB = new BN(1)
+const DEFAULT_WIN_PROB = 1 
 
 class Channel implements IChannel {
   private _settlementWindow?: Moment
@@ -110,13 +111,14 @@ class Channel implements IChannel {
   async createTicket(
     amount: Balance,
     challenge: Hash,
-    winProb: BN = DEFAULT_WIN_PROB
+    winProb: number = DEFAULT_WIN_PROB
   ): Promise<SignedTicket> {
     const ticketWinProb = new Hash(computeWinningProbability(winProb))
-    const ticket = new Ticket({
-        this.counterparty,
+    const acct = await pubKeyToAccountId(this.counterparty)
+    const ticket = new Ticket(null, {
+        counterparty: acct,
         challenge,
-        ticketEpoch: await getTicketEpoch(await pubKeyToAccountId(this.counterparty)),
+        epoch: await getTicketEpoch(acct),
         amount,
         winProb: ticketWinProb,
         channelEpoch: this.channelEpoch

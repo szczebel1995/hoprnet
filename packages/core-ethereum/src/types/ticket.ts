@@ -34,7 +34,7 @@ class Ticket extends Uint8ArrayE implements Types.Ticket {
       epoch: TicketEpoch
       amount: Balance
       winProb: Hash
-      channelIteration: TicketEpoch
+      channelEpoch: TicketEpoch
     }
   ) {
     if (!arr && !struct) {
@@ -54,7 +54,7 @@ class Ticket extends Uint8ArrayE implements Types.Ticket {
       this.set(new Uint8Array(struct.amount.toBuffer('be', AMOUNT_SIZE)), this.amountOffset - this.byteOffset)
       this.set(struct.winProb, this.winProbOffset - this.byteOffset)
       this.set(
-        new Uint8Array(struct.channelIteration.toBuffer('be', EPOCH_SIZE)),
+        new Uint8Array(struct.channelEpoch.toBuffer('be', EPOCH_SIZE)),
         this.channelIterationOffset - this.byteOffset
       )
     }
@@ -143,7 +143,7 @@ class Ticket extends Uint8ArrayE implements Types.Ticket {
       epoch: TicketEpoch
       amount: Balance
       winProb: Hash
-      channelIteration: TicketEpoch
+      channelEpoch: TicketEpoch
     }
   ): Ticket {
     return new Ticket(arr, struct)
