@@ -20,7 +20,6 @@ import {
   ChannelStatus
 } from '@hoprnet/hopr-utils'
 import assert from 'assert'
-import { PROTOCOL_STRING } from '../../constants'
 import { AcknowledgementChallenge, Packet, Acknowledgement } from '../../messages'
 import { PacketForwardInteraction } from './forward'
 
@@ -101,7 +100,14 @@ describe('packet interaction', function () {
 
     const ackReceived = defer<void>()
 
-    subscribeToAcknowledgements(libp2pSelf.subscribe, dbs[0], new EventEmitter(), SELF, () => ackReceived.resolve())
+    subscribeToAcknowledgements(
+      libp2pSelf.subscribe,
+      dbs[0],
+      new EventEmitter(),
+      SELF,
+      () => ackReceived.resolve(),
+      'protocolAck'
+    )
 
     const ackKey = deriveAckKeyShare(secrets[0])
     const ackMessage = AcknowledgementChallenge.create(ackChallenge, SELF)
@@ -119,7 +125,8 @@ describe('packet interaction', function () {
       } as any,
       SELF,
       libp2pCounterparty.send as any,
-      COUNTERPARTY
+      COUNTERPARTY,
+      'protocolAck'
     )
 
     await ackReceived.promise
@@ -136,7 +143,14 @@ describe('packet interaction', function () {
 
     const ackReceived = defer<void>()
 
-    subscribeToAcknowledgements(libp2pRelay0.subscribe, dbs[1], new EventEmitter(), RELAY0, () => ackReceived.resolve())
+    subscribeToAcknowledgements(
+      libp2pRelay0.subscribe,
+      dbs[1],
+      new EventEmitter(),
+      RELAY0,
+      () => ackReceived.resolve(),
+      'protocolAck'
+    )
 
     const interaction = new PacketForwardInteraction(
       libp2pRelay0.subscribe,
@@ -145,17 +159,20 @@ describe('packet interaction', function () {
       () => {
         throw Error(`Node is not supposed to receive message`)
       },
-      dbs[1]
+      dbs[1],
+      'protocolMsg',
+      'protocolAck'
     )
 
     const libp2pCounterparty = createFakeSendReceive(events, COUNTERPARTY)
 
-    libp2pCounterparty.subscribe(PROTOCOL_STRING, (msg: Uint8Array) => {
+    libp2pCounterparty.subscribe('protocolMsg', (msg: Uint8Array) => {
       sendAcknowledgement(
         Packet.deserialize(msg, COUNTERPARTY, RELAY0),
         RELAY0,
         libp2pCounterparty.send as any,
-        COUNTERPARTY
+        COUNTERPARTY,
+        'protocolAck'
       )
     })
 
@@ -191,7 +208,15 @@ describe('packet interaction', function () {
         receive = console.log
       }
 
-      const interaction = new PacketForwardInteraction(subscribe, send as any, pId, receive, dbs[index])
+      const interaction = new PacketForwardInteraction(
+        subscribe,
+        send as any,
+        pId,
+        receive,
+        dbs[index],
+        'protocolMsg',
+        'protocolAck'
+      )
 
       if (pId.equals(SELF)) {
         senderInteraction = interaction

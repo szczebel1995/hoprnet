@@ -4,7 +4,6 @@ import { findCommitmentPreImage, bumpCommitment } from '@hoprnet/hopr-core-ether
 
 import type { SendMessage, Subscribe } from '../../index'
 import type PeerId from 'peer-id'
-import { PROTOCOL_ACKNOWLEDGEMENT } from '../../constants'
 import { Acknowledgement, Packet } from '../../messages'
 import { HoprDB } from '@hoprnet/hopr-utils'
 import { EventEmitter } from 'events'
@@ -58,7 +57,8 @@ export function subscribeToAcknowledgements(
   db: HoprDB,
   events: EventEmitter,
   pubKey: PeerId,
-  onMessage: (ackMessage: Acknowledgement) => void
+  onMessage: (ackMessage: Acknowledgement) => void,
+  protocolAck: string
 ) {
   async function handleAcknowledgement(msg: Uint8Array, remotePeer: PeerId) {
     const ackMsg = Acknowledgement.deserialize(msg, pubKey, remotePeer)
@@ -80,7 +80,7 @@ export function subscribeToAcknowledgements(
 
   const limitConcurrency = oneAtATime()
   subscribe(
-    PROTOCOL_ACKNOWLEDGEMENT,
+    protocolAck,
     (msg: Uint8Array, remotePeer: PeerId) => limitConcurrency(() => handleAcknowledgement(msg, remotePeer)),
     false,
     (err: any) => {
@@ -93,13 +93,14 @@ export function sendAcknowledgement(
   packet: Packet,
   destination: PeerId,
   sendMessage: SendMessage,
-  privKey: PeerId
+  privKey: PeerId,
+  protocolAck: string
 ): void {
   ;(async () => {
     const ack = packet.createAcknowledgement(privKey)
 
     try {
-      await sendMessage(destination, PROTOCOL_ACKNOWLEDGEMENT, ack.serialize(), false, {
+      await sendMessage(destination, protocolAck, ack.serialize(), false, {
         timeout: ACKNOWLEDGEMENT_TIMEOUT
       })
     } catch (err) {

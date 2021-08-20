@@ -1,4 +1,3 @@
-import { PROTOCOL_STRING } from '../../constants'
 import { Packet } from '../../messages'
 import type PeerId from 'peer-id'
 import { durations, pubKeyToPeerId, HoprDB } from '@hoprnet/hopr-utils'
@@ -19,14 +18,16 @@ export class PacketForwardInteraction {
     private sendMessage: SendMessage,
     private privKey: PeerId,
     private emitMessage: (msg: Uint8Array) => void,
-    private db: HoprDB
+    private db: HoprDB,
+    private protocolMsg: string,
+    private protocolAck: string
   ) {
     this.mixer = new Mixer(this.handleMixedPacket.bind(this))
-    this.subscribe(PROTOCOL_STRING, this.handlePacket.bind(this))
+    this.subscribe(protocolMsg, this.handlePacket.bind(this))
   }
 
   async interact(counterparty: PeerId, packet: Packet): Promise<void> {
-    await this.sendMessage(counterparty, PROTOCOL_STRING, packet.serialize(), false, {
+    await this.sendMessage(counterparty, this.protocolMsg, packet.serialize(), false, {
       timeout: FORWARD_TIMEOUT
     })
   }
@@ -42,7 +43,7 @@ export class PacketForwardInteraction {
 
     if (packet.isReceiver) {
       this.emitMessage(packet.plaintext)
-      sendAcknowledgement(packet, packet.previousHop.toPeerId(), this.sendMessage, this.privKey)
+      sendAcknowledgement(packet, packet.previousHop.toPeerId(), this.sendMessage, this.privKey, this.protocolAck)
       return
     }
 
@@ -61,6 +62,6 @@ export class PacketForwardInteraction {
       log(`Forwarding transformed packet failed.`, err)
     }
 
-    sendAcknowledgement(packet, packet.previousHop.toPeerId(), this.sendMessage, this.privKey)
+    sendAcknowledgement(packet, packet.previousHop.toPeerId(), this.sendMessage, this.privKey, this.protocolAck)
   }
 }
