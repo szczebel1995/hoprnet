@@ -85,9 +85,9 @@ $v\leq r$ is the length of the path traversed by the packet, where $|Z| \leq (2(
 \begin{align}  
     \phi_i&=\{ \phi_{i-1}\|0_{2\kappa}\}\oplus \rho(h_{\rho}(\varphi_{i-1}))_{[ \,(2(r-i)+3)\kappa..(2r+3)\kappa-1\,]}
 \end{align}
-where $\phi_0=\epsilon$ is an empty string. $\phi_i$ is generated using the shared secret $\varphi_{i-1}$ and used to ensure the header packets remain constant in size as layers of encryption are added or removed. Upon receiving a packet, the processing node extracts the information destined for it from the route information and the per-hop payload. The extraction is performed by deobfuscating and left-shifting the field. Ordinarily, this would make the field shorter at each hop, allowing an attacker to deduce the route length. For this reason, the field is pre-padded before forwarding. Since the padding is part of the HMAC, the origin node will have to pre-generate an identical padding (to that generated at each hop) in order to compute the HMACs correctly for each hop.
+where $\phi_0=\epsilon$ is an empty string. $\phi_i$ is generated using the shared secret $\varphi_{i-1}$ and used to ensure the header packets remain constant in size. Upon receiving a packet, the processing node extracts the information destined for it from the route information and the per-hop payload. The extraction is performed by deobfuscating and left-shifting the field. Ordinarily, this would make the field shorter at each hop, allowing an attacker to deduce the route length. For this reason, the field is pre-padded before forwarding.
     
-$\beta_i$ is computed as the concatenation of $Z$ and a sequence of padding which is then encrypted by XORing with the output of a PRG seeded with shared key $\varphi_{v-1}$ of node $v-1$. The result is finally concatenated with $\phi$ to ensure the header packets remain constant in size.
+$\beta_i$ is computed as the concatenation of $Z$ and a sequence of padding. The concatenation is then XORed  with the output of a PRG seeded with shared key $\varphi_{v-1}$ of node $v-1$. The result is finally concatenated with $\phi$ to ensure the header packets remain constant in size.
     
 In the original Sphinx paper, $Z$ is concatenated with an identifier $I$
     and $0$ padding sequence, where $I$ is used for SURBs (single-use reply
@@ -176,7 +176,7 @@ $$m_l\leftarrow m_l\oplus H_{u4}(m_r), m_r\leftarrow S_{u3}(m_l), m_l\leftarrow 
 \subsubsection{Integrity}
 The payload is encrypted using a bidirectional error propagating block cipher
 and protected with an integrity check for the receiver, but not
-for processing relays. Packet integrity is authenticated by prepending a tag set so that any alteration to the encrypted payload as it traverses the network will result in an irrecoverably corrupted plaintext when the payload is decrypted by the recipient.
+for processing relays. Packet integrity is authenticated by prepending a tag set so that the encrypted payload is irrecoverable when decrypted if it's altered while it travels in the network.
 
 \begin{figure}[H]
     \centering
