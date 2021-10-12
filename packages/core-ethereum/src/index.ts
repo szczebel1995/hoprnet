@@ -121,11 +121,11 @@ export default class HoprEthereum extends EventEmitter {
   }
 
   public getOpenChannelsFrom(p: PublicKey) {
-    return this.indexer.getOpenChannelsFrom(p)
+    return this.getOpenChannelsFrom(p)
   }
 
   public getChannelsFrom(addr: Address): Promise<ChannelEntry[]> {
-    return this.indexer.getChannelsFrom(addr)
+    return this.getChannelsFrom(addr)
   }
 
   public getChannelsTo(addr: Address): Promise<ChannelEntry[]> {
