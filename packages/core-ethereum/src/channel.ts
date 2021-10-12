@@ -23,6 +23,7 @@ import type Indexer from './indexer'
 import type { HoprDB } from '@hoprnet/hopr-utils'
 import chalk from 'chalk'
 import { EventEmitter } from 'events'
+import { IndexerEvents } from './indexer/types'
 
 const log = debug('hopr-core-ethereum:channel')
 
@@ -37,6 +38,19 @@ class Channel {
     private readonly privateKey: Uint8Array,
     private readonly events: EventEmitter
   ) {}
+
+  private resolvePendingTransaction(eventType: IndexerEvents, tx: string): Promise<string> {
+    return new Promise((resolve) => {
+      const listener = (txHash: string[]) => {
+        const indexed = txHash.find(emitted => emitted === tx);
+        if (indexed) {
+          this.indexer.removeListener(eventType, listener)
+          resolve(tx);
+        }
+      }
+      this.indexer.addListener(eventType, listener)
+    });
+  }
 
   /**
    * Reserve a preImage for the given ticket if it is a winning ticket.
@@ -108,7 +122,8 @@ class Channel {
     if (totalFund.gt(new BN(myBalance.toBN().toString()))) {
       throw Error('We do not have enough balance to fund the channel')
     }
-    await this.chain.fundChannel(myAddress, counterpartyAddress, myFund, counterpartyFund)
+    const tx = await this.chain.fundChannel(myAddress, counterpartyAddress, myFund, counterpartyFund)
+    return await this.resolvePendingTransaction('fund-channel', tx);
   }
 
   async open(fundAmount: Balance) {
@@ -127,7 +142,8 @@ class Channel {
     if (new BN(myBalance.toBN().toString()).lt(fundAmount.toBN())) {
       throw Error('We do not have enough balance to open a channel')
     }
-    await this.chain.openChannel(myAddress, counterpartyAddress, fundAmount)
+    const tx = await this.chain.openChannel(myAddress, counterpartyAddress, fundAmount)
+    await this.resolvePendingTransaction('open-channel', tx);
     return generateChannelId(myAddress, counterpartyAddress)
   }
 
@@ -137,7 +153,8 @@ class Channel {
     if (c.status !== ChannelStatus.Open && c.status !== ChannelStatus.WaitingForCommitment) {
       throw Error('Channel status is not OPEN or WAITING FOR COMMITMENT')
     }
-    return await this.chain.initiateChannelClosure(counterpartyAddress)
+    const tx = await this.chain.initiateChannelClosure(counterpartyAddress)
+    return await this.resolvePendingTransaction('initiate-channel-closure', tx);
   }
 
   async finalizeClosure() {
@@ -147,7 +164,8 @@ class Channel {
     if (c.status !== ChannelStatus.PendingToClose) {
       throw Error('Channel status is not PENDING_TO_CLOSE')
     }
-    return await this.chain.finalizeChannelClosure(counterpartyAddress)
+    const tx = await this.chain.finalizeChannelClosure(counterpartyAddress)
+    return await this.resolvePendingTransaction('finalize-channel-closure', tx)
   }
 
   private async bumpTicketIndex(channelId: Hash): Promise<UINT256> {
@@ -283,6 +301,7 @@ class Channel {
       }
 
       const receipt = await this.chain.redeemTicket(this.counterparty.toAddress(), ackTicket, ticket)
+      await this.resolvePendingTransaction('redeem-ticket', receipt);
 
       //this.commitment.updateChainState(ackTicket.preImage)
       log('Successfully submitted ticket', ackTicket.response.toHex())
