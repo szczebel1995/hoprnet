@@ -22,7 +22,7 @@ import {
 import type { ChainWrapper } from '../ethereum'
 import type { Event, EventNames, IndexerEvents, TokenEvent, TokenEventNames } from './types'
 import { isConfirmedBlock, snapshotComparator } from './utils'
-import { utils } from "ethers"
+import { utils } from 'ethers'
 
 const log = debug('hopr-core-ethereum:indexer')
 const getSyncPercentage = (n: number, max: number) => ((n * 100) / max).toFixed(2)
@@ -97,7 +97,11 @@ class Indexer extends EventEmitter {
       }
     })
     this.chain.subscribeTokenEvents((e) => {
-      if (e.event === 'Transfer' && (e.topics[1] === utils.hexZeroPad(this.address.toHex(), 32) || e.topics[2] === utils.hexZeroPad(this.address.toHex(), 32))) {
+      if (
+        e.event === 'Transfer' &&
+        (e.topics[1] === utils.hexZeroPad(this.address.toHex(), 32) ||
+          e.topics[2] === utils.hexZeroPad(this.address.toHex(), 32))
+      ) {
         log('found events - token %o', e)
         // save transfer events
         this.onNewEvents([e])
@@ -350,7 +354,7 @@ class Indexer extends EventEmitter {
       }
     }
   }
-  
+
   private indexEvent(indexerEvent: IndexerEvents, txHash: string[]) {
     this.emit(indexerEvent, txHash)
   }
