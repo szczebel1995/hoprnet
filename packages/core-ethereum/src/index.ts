@@ -96,14 +96,14 @@ export default class HoprEthereum extends EventEmitter {
     // promise of tx hash gets resolved when the tx is mined.
     const tx = await this.chain.announce(multiaddr)
     // event emitted by the indexer
-    return this.indexer.resolvePendingTransaction('annouce', tx);
+    return this.indexer.resolvePendingTransaction('annouce', tx)
   }
 
   async withdraw(currency: 'NATIVE' | 'HOPR', recipient: string, amount: string): Promise<string> {
     // promise of tx hash gets resolved when the tx is mined.
     const tx = await this.chain.withdraw(currency, recipient, amount)
     // event emitted by the indexer
-    return this.indexer.resolvePendingTransaction(currency === 'NATIVE' ? 'withdraw-native' : 'withdraw-hopr', tx);
+    return this.indexer.resolvePendingTransaction(currency === 'NATIVE' ? 'withdraw-native' : 'withdraw-hopr', tx)
   }
 
   public getOpenChannelsFrom(p: PublicKey) {
@@ -172,7 +172,10 @@ export default class HoprEthereum extends EventEmitter {
 
   public async commitToChannel(c: ChannelEntry): Promise<void> {
     log('committing to channel', c)
-    const setCommitment = async (commitment: Hash) => this.chain.setCommitment(c.source.toAddress(), commitment).then((tx) => this.indexer.resolvePendingTransaction('channel-updated', tx))
+    const setCommitment = async (commitment: Hash) =>
+      this.chain
+        .setCommitment(c.source.toAddress(), commitment)
+        .then((tx) => this.indexer.resolvePendingTransaction('channel-updated', tx))
     const getCommitment = async () => (await this.indexer.getChannel(c.getId())).commitment
     initializeCommitment(this.db, c.getId(), getCommitment, setCommitment)
   }
