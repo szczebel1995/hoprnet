@@ -14,7 +14,7 @@
     "fund": "hardhat fund",
     "faucet": "hardhat faucet",
     "network": "DEVELOPMENT=true hardhat node",
-    "test": "DEVELOPMENT=true hardhat test",
+    "test": "DEVELOPMENT=false hardhat test",
     "coverage": "hardhat coverage",
     "prepublishOnly": "yarn build",
     "docs:generate": "yarn clean && yarn build:sol && typedoc",
