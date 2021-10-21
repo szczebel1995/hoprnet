@@ -113,7 +113,7 @@ class ChannelEntry extends Uint8ArrayE implements Types.ChannelEntry {
   }
 
   get status(): ChannelStatus {
-    const status = Object.keys(ChannelStatus).find(k => ChannelStatus[k] == this.stateCounter.toNumber())
+    const status = Object.keys(ChannelStatus).find((k) => ChannelStatus[k] == this.stateCounter.toNumber())
     if (!status) {
       throw Error("status like this doesn't exist")
     }

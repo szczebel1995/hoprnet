@@ -145,6 +145,17 @@ declare interface HoprCoreConnector {
 
 declare var HoprCoreConnector: HoprCoreConnectorStatic
 
-export { Utils, Types, DbKeys, Constants, Channel, Indexer, RoutingChannel, ChannelUpdate, HoprCoreConnectorStatic, ChannelStatus }
+export {
+  Utils,
+  Types,
+  DbKeys,
+  Constants,
+  Channel,
+  Indexer,
+  RoutingChannel,
+  ChannelUpdate,
+  HoprCoreConnectorStatic,
+  ChannelStatus
+}
 
 export default HoprCoreConnector

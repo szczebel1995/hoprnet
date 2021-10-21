@@ -1,9 +1,6 @@
 import { u8aEquals, u8aToHex } from '@hoprnet/hopr-utils'
 import { AcknowledgedTicket } from '../types'
-import {
-  isWinningTicket,
-  checkChallenge,
-} from '../utils'
+import { isWinningTicket, checkChallenge } from '../utils'
 import type HoprEthereum from '..'
 import { HASHED_SECRET_WIDTH } from '../hashedSecret'
 import { getWeb3 } from '../web3'

@@ -84,7 +84,7 @@ export async function initiateChannelSettlement(): Promise<string> {
   }
 }
 
-export async function getTicketEpoch(counterparty){
+export async function getTicketEpoch(counterparty) {
   const { hoprChannels } = getWeb3()
   return await hoprChannels.methods
     .accounts(counterparty.toHex())

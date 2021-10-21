@@ -1,16 +1,6 @@
 import { ChannelUpdate, ChannelStatus } from '@hoprnet/hopr-core-connector-interface'
 import BN from 'bn.js'
-import {
-  Balance,
-  ChannelState,
-  Hash,
-  Public,
-  Ticket,
-  TicketEpoch,
-  Moment,
-  ChannelEntry,
-  SignedTicket
-} from '../types'
+import { Balance, ChannelState, Hash, Public, Ticket, TicketEpoch, Moment, ChannelEntry, SignedTicket } from '../types'
 import { getId, pubKeyToAccountId, isPartyA, Log, hash, computeWinningProbability } from '../utils'
 import type { Channel as IChannel } from '@hoprnet/hopr-core-connector-interface'
 import { toU8a } from '@hoprnet/hopr-utils'
@@ -18,7 +8,7 @@ import { getChannel as getOnChainState, initiateChannelSettlement, getTicketEpoc
 
 const log = Log(['channel-factory'])
 
-const DEFAULT_WIN_PROB = 1 
+const DEFAULT_WIN_PROB = 1
 
 class Channel implements IChannel {
   private _settlementWindow?: Moment
@@ -108,22 +98,17 @@ class Channel implements IChannel {
     throw Error('Nonces must not be used twice.')
   }
 
-  async createTicket(
-    amount: Balance,
-    challenge: Hash,
-    winProb: number = DEFAULT_WIN_PROB
-  ): Promise<SignedTicket> {
+  async createTicket(amount: Balance, challenge: Hash, winProb: number = DEFAULT_WIN_PROB): Promise<SignedTicket> {
     const ticketWinProb = new Hash(computeWinningProbability(winProb))
     const acct = await pubKeyToAccountId(this.counterparty)
     const ticket = new Ticket(null, {
-        counterparty: acct,
-        challenge,
-        epoch: await getTicketEpoch(acct),
-        amount,
-        winProb: ticketWinProb,
-        channelEpoch: this.channelEpoch
-      }
-    )
+      counterparty: acct,
+      challenge,
+      epoch: await getTicketEpoch(acct),
+      amount,
+      winProb: ticketWinProb,
+      channelEpoch: this.channelEpoch
+    })
 
     const signature = await ticket.sign(this.channel.coreConnector.account.keys.onChain.privKey)
     ticket.set(signature, signedTicket.signatureOffset - signedTicket.byteOffset)
@@ -182,7 +167,7 @@ async function onOpen(counterparty: Public, channelEntry: ChannelEntry): Promise
   const state = new ChannelState(
     new Balance(new BN(channelEntry.deposit)),
     new Balance(new BN(channelEntry.partyABalance)),
-    (n) => Object.keys(ChannelStatus).find(k => ChannelStatus[k] == n)  
+    (n) => Object.keys(ChannelStatus).find((k) => ChannelStatus[k] == n)
   )
 
   // we store it, if we have an previous signed channel
@@ -202,7 +187,7 @@ export async function getOffChainState(db, dbKeys, counterparty: Uint8Array): Pr
   return db.get(Buffer.from(dbKeys.Channel(counterparty)))
 }
 
-  /*
+/*
   async increaseFunds(counterparty: AccountId, amount: Balance): Promise<void> {
     try {
       const { account } = this.coreConnector
