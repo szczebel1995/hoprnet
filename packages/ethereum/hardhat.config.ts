@@ -24,8 +24,7 @@ extendConfig((config: HardhatConfig) => {
   config.etherscan.apiKey = ETHERSCAN_KEY
 })
 
-extendEnvironment((_hre: HardhatRuntimeEnvironment) => {
-})
+extendEnvironment((_hre: HardhatRuntimeEnvironment) => {})
 
 const PROTOCOL_CONFIG = require('../core/protocol-config.json')
 
@@ -36,7 +35,7 @@ function networkToHardhatNetwork(input: any): any {
     gasMultiplier: input.gas_multiplier,
     live: input.live,
     tags: input.tags,
-    isHardhat: input.network_id === "hardhat"
+    isHardhat: input.network_id === 'hardhat'
   }
 
   if (input.gas) {
