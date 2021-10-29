@@ -18,12 +18,13 @@ import fs from 'fs'
 const { DEPLOYER_WALLET_PRIVATE_KEY, ETHERSCAN_KEY } = process.env
 import { expandVars } from '@hoprnet/hopr-utils'
 
+import 'tasks/node'
+
 extendConfig((config: HardhatConfig) => {
   config.etherscan.apiKey = ETHERSCAN_KEY
 })
 
-extendEnvironment((hre: HardhatRuntimeEnvironment) => {
-  hre.environment = ENVIRONMENT_ID
+extendEnvironment((_hre: HardhatRuntimeEnvironment) => {
 })
 
 const PROTOCOL_CONFIG = require('../core/protocol-config.json')
@@ -34,7 +35,8 @@ function networkToHardhatNetwork(input: any): any {
     gasPrice: 'auto',
     gasMultiplier: input.gas_multiplier,
     live: input.live,
-    tags: input.tags
+    tags: input.tags,
+    isHardhat: input.network_id === "hardhat"
   }
 
   if (input.gas) {
@@ -73,6 +75,7 @@ for (const [environmentId, environment] of Object.entries(PROTOCOL_CONFIG.enviro
 }
 
 const hardhatConfig: HardhatUserConfig = {
+  defaultNetwork: 'hardhat',
   networks,
   namedAccounts: {
     deployer: 0
@@ -93,7 +96,7 @@ const hardhatConfig: HardhatUserConfig = {
     tests: './test',
     cache: './hardhat/cache',
     artifacts: './hardhat/artifacts',
-    deployments: `./deployments/${ENVIRONMENT_ID}`
+    deployments: `./deployments`
   },
   typechain: {
     outDir: './types',
@@ -237,5 +240,7 @@ task('flat', 'Flattens and prints contracts and their dependencies')
       })
     )
   })
+
+console.log(hardhatConfig)
 
 export default hardhatConfig
