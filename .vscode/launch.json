@@ -40,6 +40,17 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Test HOPR Connect",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/node_modules/.bin/mocha",
+      "args": ["--reporter=tap", "--full-trace", "--timeout=0", "--exit"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/packages/connect",
+      "outFiles": ["${workspaceFolder}/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Test HOPRd",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/node_modules/.bin/mocha",
