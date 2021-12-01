@@ -6,3 +6,7 @@ lib
 
 # npm packets
 *.tgz
+
+#coverage
+.nyc_output
+coverage
