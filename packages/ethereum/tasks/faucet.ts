@@ -33,7 +33,12 @@ async function send(signer: providers.JsonRpcSigner, txparams: UnsignedTransacti
  * @param useWeakCrypto
  * @returns the identities' Ethereum addresses
  */
-async function getIdentities(directory: string, password: string, prefix?: string, useWeakCrypto?: boolean): Promise<string[]> {
+async function getIdentities(
+  directory: string,
+  password: string,
+  prefix?: string,
+  useWeakCrypto?: boolean
+): Promise<string[]> {
   let fileNames: string[]
   try {
     fileNames = await readdir(directory)
@@ -112,7 +117,7 @@ type CLIOPts = {
   useLocalIdentities: boolean
   amount: string
   identityDirectory?: string
-  identityPrefix?: string,
+  identityPrefix?: string
   useWeakCrypto?: boolean
 }
 
@@ -140,7 +145,9 @@ async function main(
   const identities: string[] = []
 
   if (opts.useLocalIdentities) {
-    identities.push(...(await getIdentities(opts.identityDirectory, opts.password, opts.identityPrefix, opts.useWeakCrypto)))
+    identities.push(
+      ...(await getIdentities(opts.identityDirectory, opts.password, opts.identityPrefix, opts.useWeakCrypto))
+    )
   }
 
   if (opts.address) {
