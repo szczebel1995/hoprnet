@@ -30,9 +30,10 @@ async function send(signer: providers.JsonRpcSigner, txparams: UnsignedTransacti
  * @param directory directory to look for identity files
  * @param password password to decrypt identity files
  * @param prefix only take identities with given prefix
+ * @param useWeakCrypto
  * @returns the identities' Ethereum addresses
  */
-async function getIdentities(directory: string, password: string, prefix?: string): Promise<string[]> {
+async function getIdentities(directory: string, password: string, prefix?: string, useWeakCrypto?: boolean): Promise<string[]> {
   let fileNames: string[]
   try {
     fileNames = await readdir(directory)
@@ -60,7 +61,7 @@ async function getIdentities(directory: string, password: string, prefix?: strin
       continue
     }
 
-    const decoded = await deserializeKeyPair(file, password, true)
+    const decoded = await deserializeKeyPair(file, password, useWeakCrypto)
 
     if (decoded.success) {
       identites.push(PublicKey.fromPeerId(decoded.identity).toAddress().toHex())
@@ -111,7 +112,8 @@ type CLIOPts = {
   useLocalIdentities: boolean
   amount: string
   identityDirectory?: string
-  identityPrefix?: string
+  identityPrefix?: string,
+  useWeakCrypto?: boolean
 }
 
 /**
@@ -138,7 +140,7 @@ async function main(
   const identities: string[] = []
 
   if (opts.useLocalIdentities) {
-    identities.push(...(await getIdentities(opts.identityDirectory, opts.password, opts.identityPrefix)))
+    identities.push(...(await getIdentities(opts.identityDirectory, opts.password, opts.identityPrefix, opts.useWeakCrypto)))
   }
 
   if (opts.address) {

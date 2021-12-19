@@ -134,6 +134,7 @@ task('faucet', 'Faucets a local development HOPR node account with ETH and HOPR 
   .addOptionalParam<string>('address', 'HoprToken address', undefined, types.string)
   .addOptionalParam<string>('amount', 'Amount of HOPR to fund', DEFAULT_FUND_AMOUNT, types.string)
   .addFlag('useLocalIdentities', `Fund all identities stored in identity directory`)
+  .addFlag('useWeakCrypto', 'Use weak crypto for dev purposes')
   .addOptionalParam<string>(
     'password',
     `Password to decrypt identities stored in identity directory`,
