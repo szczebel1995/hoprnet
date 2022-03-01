@@ -354,10 +354,10 @@ wait_for_port 19097 "127.0.0.1" "${node7_log}"
 
 log "All nodes came up online"
 
-# --- Run security tests --- {{{
-${mydir}/../test/security-test.sh \
-  127.0.0.1 13301 13302 19501 19502 "${api_token}"
-# }}}
+# # --- Run security tests --- {{{
+# ${mydir}/../test/security-test.sh \
+#   127.0.0.1 13301 13302 19501 19502 "${api_token}"
+# # }}}
 
 # --- Run protocol test --- {{{
 HOPRD_API_TOKEN="${api_token}" ${mydir}/../test/integration-test.sh \
