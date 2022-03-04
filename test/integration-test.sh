@@ -143,11 +143,6 @@ run_command(){
   fi
 }
 
-get_balances() {
-  local origin=${1}
-  echo $(run_command ${1} "/account/balances" "GET" "" "native" 600)
-}
-
 # TODO better validation
 validate_node_balance_gt0() {
   local balance eth_balance hopr_balance
@@ -202,22 +197,6 @@ open_channel() {
   log "Node ${source_id} open channel to Node ${destination_id} result -- ${result}"
 }
 
-ping() {
-  local origin=${1:-localhost:3001}
-  local peer_id="${2}" 
-  local assertion="${3}"
-
-  result=$(run_command ${1} "/node/ping" "POST" "{\"peerId\": \"${peer_id}\"}" ${assertion} 600)
-  echo "${result}"
-}
-
-get_tickets_statistics() {
-  local origin=${1:-localhost:3001}
-  local assertion="${2}"
-
-  echo $(run_command ${1} "/tickets/statistics" "GET" "" ${assertion} 600)
-}
-
 # $1 = node id
 # $2 = node api endpoint
 redeem_tickets() {
@@ -266,19 +245,112 @@ redeem_tickets() {
   [[ ${redeemed} -gt 0 && ${redeemed} -gt ${last_redeemed} ]] || { msg "redeemed tickets count on node ${node_id} is ${redeemed}, previously ${last_redeemed}"; exit 1; }
 }
 
-get_all_channels() {
-  local node_id="${1}"
-  local node_api="${2}"
-  local peer_id="${3}"
-  local including_closed=${4}
 
-  result=$(curl --max-time 600 "${origin}/api/v2/channels?includingClosed=${including_closed}")
-  if [[ ${result} == *"incoming"* ]]; then
-    echo "${result}"
-  else 
-    log "GET ALL CHANNELS FAILED, ${result}"
-    exit 1
-  fi 
+withdraw() {
+  local node_api="${1}"
+  local currency="${2}"
+  local amount="${3}"
+  local recipient="${4}"
+
+  result=$(run_command ${node_api} "/account/withdraw" "POST" "{\"currency\": \"${currency}\", \"amount\": \"${amount}\", \"recipient\": \"${recipient}\"}" "receipt" 600)
+  echo "${result}"
+}
+
+get_balances() {
+  local origin=${1}
+  echo $(run_command ${1} "/account/balances" "GET" "" "native" 600)
+}
+
+# get addresses is in the utils file
+
+set_alias() {
+  local node_api="${1}"
+  local peer_id="${2}"
+  local alias="${3}"
+
+  result=$(run_command ${node_api} "/aliases" "POST" "{\"peerId\": \"${peer_id}\", \"alias\": \"${alias}\"}" "" 600)
+  echo "${result}"
+}
+
+get_aliases() {
+  local node_api="${1}"
+  local assertion="${2}"
+
+  result=$(run_command ${node_api} "/aliases" "GET" "" "${assertion}" 600)
+  echo "${result}"
+}
+
+get_alias() {
+  local node_api="${1}"
+  local alias="${2}"
+  local assertion="${3}"
+
+  result=$(run_command ${node_api} "/aliases/${alias}" "GET" "" "${assertion}" 600)
+  echo "${result}"
+}
+
+remove_alias() {
+  local node_api="${1}"
+  local alias="${2}"
+
+  result=$(run_command ${node_api} "/aliases/${alias}" "DELETE" "" "" 600)
+  echo "${result}"
+}
+
+get_all_channels() {
+  local node_api="${1}"
+  local including_closed=${2}
+
+  result=$(run_command ${node_api} "/channels?includingClosed=${including_closed}" "GET" "" "incoming" 600)
+  echo "${result}"
+}
+
+get_settings() {
+  local node_api="${1}"
+
+  result=$(run_command ${node_api} "/settings" "GET" "" "includeRecipient" 600)
+  echo "${result}"
+}
+
+set_setting() {
+  local node_api="${1}"
+  local key="${2}"
+  local value="${3}"
+
+  result=$(run_command ${node_api} "/settings" "GET" "{\"key\": \"${key}\", \"value\": \"${value}\"}" "" 600)
+  echo "${result}"
+}
+
+redeem_tickets_in_channel() {
+  local node_api="${1}"
+  local peer_id=${2}
+
+  result=$(run_command ${node_api} "/channels/${peer_id}/tickets/redeem" "POST" "" "" 600)
+  echo "${result}"
+}
+
+get_tickets_in_channel() {
+  local node_api="${1}"
+  local peer_id=${2}
+
+  result=$(run_command ${node_api} "/channels/${peer_id}/tickets" "GET" "" "counterparty" 600)
+  echo "${result}"
+}
+
+ping() {
+  local origin=${1:-localhost:3001}
+  local peer_id="${2}" 
+  local assertion="${3}"
+
+  result=$(run_command ${1} "/node/ping" "POST" "{\"peerId\": \"${peer_id}\"}" ${assertion} 600)
+  echo "${result}"
+}
+
+get_tickets_statistics() {
+  local origin=${1:-localhost:3001}
+  local assertion="${2}"
+
+  echo $(run_command ${1} "/tickets/statistics" "GET" "" ${assertion} 600)
 }
 
 log "Running full E2E test with ${api1}, ${api2}, ${api3}, ${api4}, ${api5}, ${api6}, ${api7}"
@@ -317,6 +389,47 @@ log "hopr addr4: ${addr4}"
 log "hopr addr5: ${addr5}"
 # we don't need node6 because it's short-living
 log "hopr addr7: ${addr7}"
+
+test_withdraw() {
+  local node_api="${1}"
+
+  balances=$(get_balances ${node_api})
+  native_balance=$(echo ${balances} | jq -r .native)
+  hopr_balance=$(echo ${balances} | jq -r .hopr)
+
+  withdraw ${node_api} "NATIVE" 10 0x858aa354db6ae5ea1217c5018c90403bde94e09e
+  sleep 30
+
+  balances=$(get_balances ${node_api})
+  new_native_balance=$(echo ${balances} | jq -r .native)
+  [[ "${native_balance}" == "${new_native_balance}" ]] && { msg "Native withdraw failed, pre: ${native_balance}, post: ${new_native_balance}"; exit 1; }
+
+  withdraw ${node_api} "HOPR" 10 0x858aa354db6ae5ea1217c5018c90403bde94e09e
+  sleep 30
+
+  balances=$(get_balances ${node_api})
+  new_hopr_balance=$(echo ${balances} | jq -r .hopr)
+  [[ "${hoprBalance}" == "${new_hopr_balance}" ]] && { msg "Hopr withdraw failed, pre: ${hoprBalance}, post: ${new_hopr_balance}"; exit 1; }
+}
+
+test_withdraw ${api1}
+
+test_aliases() {
+  local node_api="${1}"
+  local peer_id="${2}"
+
+  aliases=$(get_aliases ${node_api} "\"me\"")
+  set_alias ${node_api} ${peer_id} "Alice"
+  aliases=$(get_aliases ${node_api} "\"Alice\"")
+  get_alias ${node_api} "Alice" "${peer_id}"
+  remove_alias ${node_api} "Alice"
+  aliases=$(get_aliases ${node_api} "\"me\"")
+  [[ "${aliases}" == *"Alice"* ]] && { msg "Alias removal failed: ${aliases}"; exit 1; }
+}
+
+test_aliases ${api1} ${addr2}
+
+
 
 # # NO APIv2 ENDPOINT EQUIVALENT
 # log "Check peers"
@@ -421,6 +534,8 @@ for i in `seq 1 10`; do
   send_message "${api1}" "${addr5}" "hello, world" "" 
 done
 
+# TODO: test ticket redemption on specific channel here
+
 redeem_tickets "2" "${api2}" &
 redeem_tickets "3" "${api2}" &
 redeem_tickets "4" "${api2}" &
@@ -450,3 +565,17 @@ sleep 70
 
 # verify channel has been closed
 close_channel 1 5 "${api1}" "${addr5}" "true"
+
+# it takes the channels a lot of time to go from PendingToClose to Closed state
+sleep 70
+
+test_get_all_channels() {
+  local node_api=${1}
+
+  channels=$(get_all_channels ${node_api} false)
+  [[ "${channels}" == *"channelId"* ]] && { msg "There are still channels open: ${channels}"; exit 1; }
+  channels=$(get_all_channels ${node_api} true)
+  [[ "${channels}" != *"channelId"* ]] && { msg "There are no closed channels: ${channels}"; exit 1; }
+}
+
+test_get_all_channels ${api1}
