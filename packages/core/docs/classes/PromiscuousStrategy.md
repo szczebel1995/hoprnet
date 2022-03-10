@@ -52,7 +52,7 @@ ChannelStrategy.name
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:86](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L86)
+[packages/core/src/channel-strategy.ts:86](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L86)
 
 ___
 
@@ -70,7 +70,7 @@ ChannelStrategy.tickInterval
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:72](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L72)
+[packages/core/src/channel-strategy.ts:72](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L72)
 
 ## Methods
 
@@ -99,7 +99,7 @@ ChannelStrategy.onChannelWillClose
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:58](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L58)
+[packages/core/src/channel-strategy.ts:58](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L58)
 
 ___
 
@@ -128,7 +128,7 @@ ChannelStrategy.onWinningTicket
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:52](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L52)
+[packages/core/src/channel-strategy.ts:52](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L52)
 
 ___
 
@@ -156,7 +156,7 @@ ChannelStrategy.shouldCommitToChannel
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:67](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L67)
+[packages/core/src/channel-strategy.ts:67](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L67)
 
 ___
 
@@ -183,4 +183,4 @@ ChannelStrategy.tick
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:88](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L88)
+[packages/core/src/channel-strategy.ts:88](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L88)

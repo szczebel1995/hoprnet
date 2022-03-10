@@ -45,7 +45,7 @@
 
 #### Defined in
 
-[packages/ethereum/src/index.ts:9](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/index.ts#L9)
+[packages/ethereum/src/index.ts:9](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/index.ts#L9)
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[packages/ethereum/src/index.ts:7](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/index.ts#L7)
+[packages/ethereum/src/index.ts:7](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/index.ts#L7)
 
 ___
 
@@ -70,7 +70,7 @@ production = our current production chain
 
 #### Defined in
 
-[packages/ethereum/src/constants.ts:10](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/constants.ts#L10)
+[packages/ethereum/src/constants.ts:10](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/constants.ts#L10)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[packages/ethereum/src/constants.ts:11](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/constants.ts#L11)
+[packages/ethereum/src/constants.ts:11](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/constants.ts#L11)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[packages/ethereum/src/constants.ts:2](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/constants.ts#L2)
+[packages/ethereum/src/constants.ts:2](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/constants.ts#L2)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[packages/ethereum/src/constants.ts:1](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/constants.ts#L1)
+[packages/ethereum/src/constants.ts:1](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/constants.ts#L1)
 
 ## Functions
 
@@ -122,4 +122,4 @@ ___
 
 #### Defined in
 
-[packages/ethereum/src/index.ts:16](https://github.com/hoprnet/hoprnet/blob/master/packages/ethereum/src/index.ts#L16)
+[packages/ethereum/src/index.ts:16](https://github.com/szczebel1995/hoprnet/blob/master/packages/ethereum/src/index.ts#L16)

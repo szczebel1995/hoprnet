@@ -58,7 +58,7 @@
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:17](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L17)
+[packages/core/src/channel-strategy.ts:17](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L17)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/channel-strategy.ts:16](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L16)
+[packages/core/src/channel-strategy.ts:16](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/channel-strategy.ts#L16)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/index.ts:79](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/index.ts#L79)
+[packages/core/src/index.ts:79](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/index.ts#L79)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/index.ts:118](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/index.ts#L118)
+[packages/core/src/index.ts:118](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/index.ts#L118)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/environment.ts:27](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/environment.ts#L27)
+[packages/core/src/environment.ts:27](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/environment.ts#L27)
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/index.ts:133](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/index.ts#L133)
+[packages/core/src/index.ts:133](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/index.ts#L133)
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/index.ts:120](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/index.ts#L120)
+[packages/core/src/index.ts:120](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/index.ts#L120)
 
 ## Variables
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:28](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L28)
+[packages/core/src/constants.ts:28](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L28)
 
 ___
 
@@ -172,7 +172,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:27](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L27)
+[packages/core/src/constants.ts:27](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L27)
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:10](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L10)
+[packages/core/src/constants.ts:10](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L10)
 
 ___
 
@@ -192,7 +192,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:6](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L6)
+[packages/core/src/constants.ts:6](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L6)
 
 ___
 
@@ -202,7 +202,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:13](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L13)
+[packages/core/src/constants.ts:13](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L13)
 
 ___
 
@@ -212,7 +212,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:14](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L14)
+[packages/core/src/constants.ts:14](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L14)
 
 ___
 
@@ -222,7 +222,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:12](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L12)
+[packages/core/src/constants.ts:12](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L12)
 
 ___
 
@@ -232,7 +232,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:20](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L20)
+[packages/core/src/constants.ts:20](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L20)
 
 ___
 
@@ -242,7 +242,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:25](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L25)
+[packages/core/src/constants.ts:25](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L25)
 
 ___
 
@@ -252,7 +252,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:24](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L24)
+[packages/core/src/constants.ts:24](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L24)
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:18](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L18)
+[packages/core/src/constants.ts:18](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L18)
 
 ___
 
@@ -272,7 +272,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:16](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L16)
+[packages/core/src/constants.ts:16](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L16)
 
 ___
 
@@ -282,7 +282,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:22](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L22)
+[packages/core/src/constants.ts:22](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L22)
 
 ___
 
@@ -292,7 +292,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:23](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L23)
+[packages/core/src/constants.ts:23](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L23)
 
 ___
 
@@ -302,7 +302,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:5](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L5)
+[packages/core/src/constants.ts:5](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L5)
 
 ___
 
@@ -312,7 +312,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:21](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L21)
+[packages/core/src/constants.ts:21](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L21)
 
 ___
 
@@ -322,7 +322,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/constants.ts:8](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/constants.ts#L8)
+[packages/core/src/constants.ts:8](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/constants.ts#L8)
 
 ___
 
@@ -332,7 +332,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/index.mock.ts:3](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/index.mock.ts#L3)
+[packages/core/src/index.mock.ts:3](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/index.mock.ts#L3)
 
 ## Functions
 
@@ -354,7 +354,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/main.ts:139](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/main.ts#L139)
+[packages/core/src/main.ts:139](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/main.ts#L139)
 
 ___
 
@@ -374,7 +374,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/libp2p.mock.ts:8](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/libp2p.mock.ts#L8)
+[packages/core/src/libp2p.mock.ts:8](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/libp2p.mock.ts#L8)
 
 ___
 
@@ -406,7 +406,7 @@ destination
 
 #### Defined in
 
-[packages/core/src/path/index.ts:38](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/path/index.ts#L38)
+[packages/core/src/path/index.ts:38](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/path/index.ts#L38)
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 #### Defined in
 
-[packages/core/src/environment.ts:41](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/environment.ts#L41)
+[packages/core/src/environment.ts:41](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/environment.ts#L41)
 
 ___
 
@@ -440,4 +440,4 @@ ___
 
 #### Defined in
 
-[packages/core/src/environment.ts:35](https://github.com/hoprnet/hoprnet/blob/master/packages/core/src/environment.ts#L35)
+[packages/core/src/environment.ts:35](https://github.com/szczebel1995/hoprnet/blob/master/packages/core/src/environment.ts#L35)

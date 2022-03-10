@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[collection/fifo.ts:7](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L7)
+[collection/fifo.ts:7](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L7)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[collection/fifo.ts:10](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L10)
+[collection/fifo.ts:10](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L10)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[collection/fifo.ts:12](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L12)
+[collection/fifo.ts:12](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L12)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[collection/fifo.ts:11](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L11)
+[collection/fifo.ts:11](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L11)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 #### Defined in
 
-[collection/fifo.ts:9](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L9)
+[collection/fifo.ts:9](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L9)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[collection/fifo.ts:8](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L8)
+[collection/fifo.ts:8](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L8)
 
 ___
 
@@ -139,4 +139,4 @@ ___
 
 #### Defined in
 
-[collection/fifo.ts:13](https://github.com/hoprnet/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L13)
+[collection/fifo.ts:13](https://github.com/szczebel1995/hoprnet/blob/master/packages/utils/src/collection/fifo.ts#L13)
